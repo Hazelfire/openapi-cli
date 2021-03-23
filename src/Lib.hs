@@ -28,10 +28,11 @@ import System.IO (hPrint, hPutStrLn, stderr, stdin, hGetContents, hClose)
 import qualified System.Directory as Directory
 import qualified System.Process.Typed as Process
 import qualified Data.String as String
+import qualified Network.URI.Encode as URI
 
 data ApiConfig = ApiConfig {
-apiConfigFile :: String,
-apiConfigDefaults :: InsOrd.InsOrdHashMap T.Text ConfigValue
+  apiConfigFile :: String,
+  apiConfigDefaults :: InsOrd.InsOrdHashMap T.Text ConfigValue
 }
 
 instance Aeson.FromJSON ApiConfig where
@@ -166,9 +167,9 @@ createRequest server path params arguments = do
       headerParams = filter ((==OpenApi.ParamHeader) . (^. OpenApi.in_)) params
       queryParams = filter ((==OpenApi.ParamQuery) . (^. OpenApi.in_)) params
       pathParamNames = map (^.OpenApi.name) pathParams
-      pathSubstitutions = map (\name -> (name, Maybe.fromMaybe "" $ InsOrd.lookup name arguments)) pathParamNames
+      pathSubstitutions = map (\name -> (name, URI.encodeText $ Maybe.fromMaybe "" $ InsOrd.lookup name arguments)) pathParamNames
       headers = Maybe.catMaybes $ map (\name -> InsOrd.lookup name arguments >>= \value -> return (String.fromString $ T.unpack name, String.fromString $ T.unpack value)) (map (^.OpenApi.name) headerParams)
-      queryString = T.intercalate "&"  . Maybe.catMaybes $ map (\name -> InsOrd.lookup name arguments >>= \value -> return $ T.concat [name, "=", value]) (map (^.OpenApi.name) queryParams)
+      queryString = T.intercalate "&"  . Maybe.catMaybes $ map (\name -> InsOrd.lookup name arguments >>= \value -> return $ T.concat [name, "=", URI.encodeText value]) (map (^.OpenApi.name) queryParams)
   initialRequest <- Http.parseRequest (T.unpack $ T.concat [server ^. OpenApi.url, substitutePath path pathSubstitutions])
   return $ initialRequest { Http.requestHeaders = headers 
                           , Http.queryString = T.encodeUtf8 queryString }

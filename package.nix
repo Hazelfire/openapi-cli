@@ -1,7 +1,7 @@
 { mkDerivation, aeson, base, bytestring, directory, hpack
 , http-client, http-client-tls, insert-ordered-containers
 , json-pointy, lens, lib, openapi3, process, text, typed-process
-, yaml
+, uri-encode, yaml
 }:
 mkDerivation {
   pname = "openapi-generic-cli";
@@ -12,18 +12,18 @@ mkDerivation {
   libraryHaskellDepends = [
     aeson base bytestring directory http-client http-client-tls
     insert-ordered-containers json-pointy lens openapi3 process text
-    typed-process yaml
+    typed-process uri-encode yaml
   ];
   libraryToolDepends = [ hpack ];
   executableHaskellDepends = [
     aeson base bytestring directory http-client http-client-tls
     insert-ordered-containers json-pointy lens openapi3 process text
-    typed-process yaml
+    typed-process uri-encode yaml
   ];
   testHaskellDepends = [
     aeson base bytestring directory http-client http-client-tls
     insert-ordered-containers json-pointy lens openapi3 process text
-    typed-process yaml
+    typed-process uri-encode yaml
   ];
   prePatch = "hpack";
   homepage = "https://github.com/Hazelfire/openapi-generic-cli#readme";
