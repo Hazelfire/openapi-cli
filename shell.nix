@@ -15,5 +15,6 @@ in
       stack 
       haskellPackages.hlint
       haskellPackages.brittany
+      yq
     ]);
   }

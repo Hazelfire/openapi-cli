@@ -4,10 +4,12 @@ let
     packageOverrides = pkgs: rec {
       haskellPackages = pkgs.haskellPackages.override {
         overrides = haskellPackagesNew: haskellPackagesOld: rec {
-          semantic-scholar-cli =
+          openapi-generic-cli =
             haskellPackagesNew.callPackage ./package.nix { };
           openapi3 =
             haskellPackagesNew.callPackage ./nix/openapi.nix { };
+          json-pointy =
+            haskellPackagesNew.callPackage ./nix/json-pointy.nix { };
         };
       };
     };
@@ -15,4 +17,4 @@ let
 
   mypkgs = import <nixpkgs> { inherit config; };
 in
-mypkgs.haskellPackages.semantic-scholar-cli
+mypkgs.haskellPackages.openapi-generic-cli

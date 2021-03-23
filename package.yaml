@@ -1,10 +1,10 @@
-name:                semantic-scholar-cli
+name:                openapi-generic-cli
 version:             0.1.0.0
-github:              "githubuser/semantic-scholar-cli"
+github:              "Hazelfire/openapi-generic-cli"
 license:             BSD3
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2021 Author name here"
+author:              "Sam Nolan"
+maintainer:          "samnolan555@gmail.com"
+copyright:           "2021 Sam Nolan"
 
 extra-source-files:
 - README.md
@@ -17,7 +17,7 @@ extra-source-files:
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on GitHub at <https://github.com/githubuser/semantic-scholar-cli#readme>
+description:         Please see the README on GitHub at <https://github.com/githubuser/openapi-generic-cli#readme>
 
 dependencies:
 - base >= 4.7 && < 5
@@ -29,6 +29,11 @@ dependencies:
 - openapi3
 - yaml
 - lens
+- json-pointy
+- insert-ordered-containers
+- directory
+- process
+- typed-process
 
 library:
   source-dirs: src
@@ -42,7 +47,7 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - semantic-scholar-cli
+    - openapi-generic-cli
 
 tests:
   semantic-scholar-cli-test:
@@ -53,4 +58,4 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - semantic-scholar-cli
+    - openapi-generic-cli
